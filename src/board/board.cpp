@@ -1,12 +1,21 @@
 #include "board.hpp"
 #include <iostream>
 
+// Board
 Board::Board() {
-    auto columns = new char *[size];
+    auto columns = new Piece *[BOARD_SIZE];
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < BOARD_SIZE; i++)
     {
-        columns[i] = new char[size];
+        columns[i] = new Piece[BOARD_SIZE];
+    }
+
+    for (int x = 0; x < BOARD_SIZE; x++) {
+        for (int y = 0; y < BOARD_SIZE; y++) {
+            columns[y][x].type = Empty;
+            columns[y][x].pos.y = y + 65;
+            columns[y][x].pos.x = x;
+        }
     }
 
     board = columns;
@@ -18,14 +27,14 @@ Board::~Board() {
 }
 
 void Board::print() {
-    std::cout << " " << std::string(size * 2 - 1, '-') << '\n';
-    for (int x = 0; x < size; x++) {
+    std::cout << " " << std::string(BOARD_SIZE * 2 - 1, '-') << '\n';
+    for (int x = 0; x < BOARD_SIZE; x++) {
         std::cout << '|';
-        for (int y = 0; y < size; y++)
+        for (int y = 0; y < BOARD_SIZE; y++)
         {
             std::cout << board[y][x] << '|';
         }
-        std::cout << "\n " << std::string(size * 2 - 1, '-') << '\n';
+        std::cout << "\n " << std::string(BOARD_SIZE * 2 - 1, '-') << '\n';
     }
 }
 
@@ -35,10 +44,9 @@ void Board::rerender() {
     print();
 }
 
-// Privates
 void Board::freeBoard() {
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
         delete board[i];
     }
 
@@ -50,28 +58,23 @@ void Board::fillBoard() {
     placePawns();
     placePieces(0);
     placePieces(7);
-
-    for (int x = 2; x < 6; x++) {
-        for (int y = 0; y < size; y++) {
-            board[y][x] = ' ';
-        }
-    }
 }
 
 void Board::placePawns() {
-    for (int i = 0; i < size; i++) {
-        board[i][1] = 'P';
-        board[i][6] = 'P';
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        // Todo - Figure out polymorphism for this.
+        board[i][1].type = Pawn;
+        board[i][6].type = Pawn;
     }
 }
 
 void Board::placePieces(int r) {
-    board[0][r] = 'R';
-    board[1][r] = 'N';
-    board[2][r] = 'B';
-    board[3][r] = 'Q';
-    board[4][r] = 'K';
-    board[5][r] = 'B';
-    board[6][r] = 'N';
-    board[7][r] = 'R';
+    board[0][r].type = Rook;
+    board[1][r].type = Knight;
+    board[2][r].type = Bishop;
+    board[3][r].type = Queen;
+    board[4][r].type = King;
+    board[5][r].type = Bishop;
+    board[6][r].type = Knight;
+    board[7][r].type = Rook;
 }
