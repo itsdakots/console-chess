@@ -32,32 +32,32 @@ class Piece {
         virtual bool canMove(Position pos);
 };
 
-class QueenPiece : Piece {
+class QueenPiece : public Piece {
     public:
         QueenPiece();
 };
 
-class RookPiece : Piece {
+class RookPiece : public Piece {
     public:
         RookPiece();
 };
 
-class KnightPiece : Piece {
+class KnightPiece : public Piece {
     public:
         KnightPiece();
 };
 
-class BishopPiece : Piece {
+class BishopPiece : public Piece {
     public:
         BishopPiece();
 };
 
-class KingPiece : Piece {
+class KingPiece : public Piece {
     public:
         KingPiece();
 };
 
-class PawnPiece : Piece {
+class PawnPiece : public Piece {
     public:
         PawnPiece();
 };

@@ -39,7 +39,7 @@ void Board::print() {
 }
 
 void Board::rerender() {
-    // Todo - Test Later
+    // Todo - Test Later and move to a separate namespace for these functions
     std::cout << "\033[" << 17 << ";" << 0 << "H" << "\033[J";
     print();
 }
@@ -62,19 +62,18 @@ void Board::fillBoard() {
 
 void Board::placePawns() {
     for (int i = 0; i < BOARD_SIZE; i++) {
-        // Todo - Figure out polymorphism for this.
-        board[i][1].type = Pawn;
-        board[i][6].type = Pawn;
+        board[i][1] = PawnPiece();
+        board[i][6] = PawnPiece();
     }
 }
 
 void Board::placePieces(int r) {
-    board[0][r].type = Rook;
-    board[1][r].type = Knight;
-    board[2][r].type = Bishop;
-    board[3][r].type = Queen;
-    board[4][r].type = King;
-    board[5][r].type = Bishop;
-    board[6][r].type = Knight;
-    board[7][r].type = Rook;
+    board[0][r] = RookPiece();
+    board[1][r] = KnightPiece();
+    board[2][r] = BishopPiece();
+    board[3][r] = QueenPiece();
+    board[4][r] = KingPiece();
+    board[5][r] = BishopPiece();
+    board[6][r] = KnightPiece();
+    board[7][r] = RookPiece();
 }
