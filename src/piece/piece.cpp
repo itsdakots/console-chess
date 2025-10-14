@@ -7,6 +7,15 @@ std::ostream& operator<<(std::ostream& os, const Piece& obj) {
     return os;
 }
 
+std::string &operator+(std::string &str, const Piece &obj) {
+    str += std::string(1, obj.getTypeChar(obj.type));
+    return str;
+}
+
+std::string Piece::toString() {
+    return std::string(1, getTypeChar(type));
+}
+
 // Todo - Override this for all piece types.
 bool Piece::canMove(Position pos) {
     return false;

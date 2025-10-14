@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "../util/screen/screen.hpp"
 #include <iostream>
 
 // Board
@@ -13,7 +14,7 @@ Board::Board() {
     for (int x = 0; x < BOARD_SIZE; x++) {
         for (int y = 0; y < BOARD_SIZE; y++) {
             columns[y][x].type = Empty;
-            columns[y][x].pos.y = y + 65;
+            columns[y][x].pos.y = y;
             columns[y][x].pos.x = x;
         }
     }
@@ -27,20 +28,23 @@ Board::~Board() {
 }
 
 void Board::print() {
-    std::cout << " " << std::string(BOARD_SIZE * 2 - 1, '-') << '\n';
+    std::string str = "";
+    str += std::string(BOARD_SIZE * 2 - 1, '-') + '\n';
     for (int x = 0; x < BOARD_SIZE; x++) {
-        std::cout << '|';
+        str += '|';
         for (int y = 0; y < BOARD_SIZE; y++)
         {
-            std::cout << board[y][x] << '|';
+            str += board[y][x].toString() + '|';
         }
-        std::cout << "\n " << std::string(BOARD_SIZE * 2 - 1, '-') << '\n';
+        str += "\n " + std::string(BOARD_SIZE * 2 - 1, '-') + '\n';
     }
+
+    screen::print(str);
 }
 
 void Board::rerender() {
+    screen::clearConsole(17, 0);
     // Todo - Test Later and move to a separate namespace for these functions
-    std::cout << "\033[" << 17 << ";" << 0 << "H" << "\033[J";
     print();
 }
 

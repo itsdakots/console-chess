@@ -15,7 +15,7 @@ enum PieceType
 
 struct Position {
     int x;
-    char y;
+    int y;
 };
 
 class Piece {
@@ -24,7 +24,9 @@ class Piece {
         ~Piece() = default;
         PieceType type;
         Position pos;
-        friend std::ostream& operator<<(std::ostream& os, const Piece& obj);
+        std::string toString();
+        friend std::ostream &operator<<(std::ostream &os, const Piece &obj);
+        friend std::string &operator+(std::string &str, const Piece &obj);
         static char getTypeChar(PieceType type);
 
     private:
