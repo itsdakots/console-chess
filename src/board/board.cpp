@@ -1,5 +1,6 @@
 #include "board.hpp"
 #include "../util/screen/screen.hpp"
+#include "../util/constants.hpp"
 #include <iostream>
 
 // Board
@@ -49,7 +50,6 @@ void Board::rerender() {
 }
 
 void Board::freeBoard() {
-
     for (int i = 0; i < BOARD_SIZE; i++) {
         delete board[i];
     }
@@ -60,24 +60,24 @@ void Board::freeBoard() {
 
 void Board::fillBoard() {
     placePawns();
-    placePieces(0);
-    placePieces(7);
+    placePieces(0, false);
+    placePieces(7, true);
 }
 
 void Board::placePawns() {
     for (int i = 0; i < BOARD_SIZE; i++) {
-        board[i][1] = PawnPiece();
-        board[i][6] = PawnPiece();
+        board[i][1] = PawnPiece(false);
+        board[i][6] = PawnPiece(true);
     }
 }
 
-void Board::placePieces(int r) {
-    board[0][r] = RookPiece();
-    board[1][r] = KnightPiece();
-    board[2][r] = BishopPiece();
-    board[3][r] = QueenPiece();
-    board[4][r] = KingPiece();
-    board[5][r] = BishopPiece();
-    board[6][r] = KnightPiece();
-    board[7][r] = RookPiece();
+void Board::placePieces(int r, bool white) {
+    board[0][r] = RookPiece(white);
+    board[1][r] = KnightPiece(white);
+    board[2][r] = BishopPiece(white);
+    board[3][r] = QueenPiece(white);
+    board[4][r] = KingPiece(white);
+    board[5][r] = BishopPiece(white);
+    board[6][r] = KnightPiece(white);
+    board[7][r] = RookPiece(white);
 }

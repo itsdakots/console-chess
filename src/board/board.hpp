@@ -15,7 +15,7 @@ private:
     Piece **board;
     void fillBoard();
     void freeBoard();
-    void placePieces(int r);
+    void placePieces(int r, bool white);
     void placePawns();
 };
 

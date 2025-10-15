@@ -1,5 +1,10 @@
 #include "piece.hpp"
+#include "../util/screen/screen.hpp"
+#include "../util/constants.hpp"
 #include <format>
+
+Piece::Piece(bool w) : white(w), type(Empty) {}
+Piece::Piece() : white(false), type(Empty) {}
 
 std::ostream& operator<<(std::ostream& os, const Piece& obj) {
     char c = obj.getTypeChar(obj.type);
@@ -13,12 +18,17 @@ std::string &operator+(std::string &str, const Piece &obj) {
 }
 
 std::string Piece::toString() {
-    return std::string(1, getTypeChar(type));
+    if (white) return std::string(1, getTypeChar(type));
+    return screen::formatText(std::string(1, getTypeChar(type)), BLACK_TEXT_SETTINGS);
 }
 
 // Todo - Override this for all piece types.
 bool Piece::canMove(Position pos) {
     return false;
+}
+
+bool Piece::isWhite() {
+    return white;
 }
 
 char Piece::getTypeChar(PieceType type) {
@@ -41,9 +51,9 @@ char Piece::getTypeChar(PieceType type) {
         throw new std::runtime_error(std::format("Piece type {} is unknown", (int)type));
 }
 
-QueenPiece::QueenPiece() { type = Queen; }
-RookPiece::RookPiece() { type = Rook; }
-KnightPiece::KnightPiece() { type = Knight; }
-BishopPiece::BishopPiece() { type = Bishop; }
-KingPiece::KingPiece() { type = King; }
-PawnPiece::PawnPiece() { type = Pawn; }
+QueenPiece::QueenPiece(bool w) : Piece(w) { type = Queen; }
+RookPiece::RookPiece(bool w) : Piece(w) { type = Rook; }
+KnightPiece::KnightPiece(bool w) : Piece(w) { type = Knight; }
+BishopPiece::BishopPiece(bool w) : Piece(w) { type = Bishop; }
+KingPiece::KingPiece(bool w) : Piece(w) { type = King; }
+PawnPiece::PawnPiece(bool w) : Piece(w) { type = Pawn; }

@@ -11,4 +11,42 @@ namespace screen {
         if (newLine)
             std::cout << '\n';
     }
+
+    void write(std::string s, TextSettings settings) {
+        auto result = formatText(s, settings);
+
+        print(result);
+    }
+
+    std::string formatText(std::string s, TextSettings settings) {
+        std::string result = "\033[";
+        if (settings.bold != NULL) {
+            result += "1;";
+        }
+
+        if (settings.italics != NULL) {
+            result += "3;";
+        }
+
+        if (settings.underline != NULL) {
+            result += "4;";
+        }
+
+        if (settings.foreColor != NULL) {
+            result += std::to_string(settings.foreColor) + ";";
+        }
+
+        if (settings.backColor != NULL) {
+            result += std::to_string(settings.backColor) + ";";
+        }
+
+        if (result.length() > 2) {
+            result.pop_back();
+            result += "m";
+        }
+
+        result += s + "\033[0m";
+
+        return result;
+    }
 }

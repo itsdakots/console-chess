@@ -22,46 +22,50 @@ class Piece {
 
     public:
         ~Piece() = default;
+        Piece(bool w);
+        Piece();
         PieceType type;
         Position pos;
         std::string toString();
         friend std::ostream &operator<<(std::ostream &os, const Piece &obj);
         friend std::string &operator+(std::string &str, const Piece &obj);
+        bool isWhite();
         static char getTypeChar(PieceType type);
 
     private:
+        bool white;
         // Pure virtual (basically abstract function) = virtual bool canMove(Position pos) = 0;
         virtual bool canMove(Position pos);
 };
 
 class QueenPiece : public Piece {
     public:
-        QueenPiece();
+        QueenPiece(bool w);
 };
 
 class RookPiece : public Piece {
     public:
-        RookPiece();
+        RookPiece(bool w);
 };
 
 class KnightPiece : public Piece {
     public:
-        KnightPiece();
+        KnightPiece(bool w);
 };
 
 class BishopPiece : public Piece {
     public:
-        BishopPiece();
+        BishopPiece(bool w);
 };
 
 class KingPiece : public Piece {
     public:
-        KingPiece();
+        KingPiece(bool w);
 };
 
 class PawnPiece : public Piece {
     public:
-        PawnPiece();
+        PawnPiece(bool w);
 };
 
 #endif
