@@ -20,6 +20,8 @@ namespace screen {
     void write(std::string s, TextSettings settings = {});
 
     std::string formatText(std::string s, TextSettings settings = {});
+
+    char getInput();
 }
 
 #endif

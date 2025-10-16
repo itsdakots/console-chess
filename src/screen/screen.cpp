@@ -1,6 +1,15 @@
 #include "screen.hpp"
 #include <iostream>
 
+#if defined(_WIN32)
+#include <conio.h>
+#endif
+
+#if defined(__unix__) || defined(__unix) || defined(__APPLE__) || defined(__MACH__)
+#include <unistd.h>
+#include <termios.h>
+#endif
+
 namespace screen {
     void clearConsole(int x, int y) {
         std::cout << "\033[" << x << ";" << y << "H" << "\033[J";
@@ -53,4 +62,39 @@ namespace screen {
 
         return result;
     }
+
+    // Todo: Everything after here needs to be put inside of an Input class.
+    void throwUnsupported() {
+        throw new std::runtime_error("Unsupported operating system.");
+    }
+
+    #if defined(_WIN32)
+        char getInput() {
+            char c = _getch();
+            return c;
+        }
+    #elif defined(__unix__) || defined(__unix) || defined(__APPLE__) || defined(__MACH__)
+        termios oldt;
+        char getInput()
+        {
+            termios newt;
+            tcgetattr(STDIN_FILENO, &oldt); // save old settings
+            newt = oldt;
+            newt.c_lflag &= ~(ICANON | ECHO); // disable buffering & echo
+            tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+            char c = getchar();
+            return c;
+        }
+
+        // Todo: Because this always needs to happen, we need to put this in a class destructor.
+        char breakDown() {
+            tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+        }
+    #else
+        char getInput() {
+            throwUnsupported();
+        }
+    #endif
+    
 }
