@@ -1,7 +1,9 @@
 
 #ifndef PIECE
 #define PIECE
+#include "../util/structs.hpp"
 #include <sstream>
+#include <vector>
 enum PieceType
 {
     Empty,
@@ -13,16 +15,11 @@ enum PieceType
     Pawn
 };
 
-struct Position {
-    int x;
-    int y;
-};
-
 class Piece {
 
     public:
         ~Piece() = default;
-        Piece(bool w);
+        Piece(PieceType type, bool w);
         Piece();
         PieceType type;
         Position pos;
@@ -35,7 +32,9 @@ class Piece {
     private:
         bool white;
         // Pure virtual (basically abstract function) = virtual bool canMove(Position pos) = 0;
-        virtual bool canMove(Position pos);
+
+        // protected:
+        //     virtual std::vector<Position> availablePositions(Position pos) = 0;
 };
 
 class QueenPiece : public Piece {
@@ -66,6 +65,9 @@ class KingPiece : public Piece {
 class PawnPiece : public Piece {
     public:
         PawnPiece(bool w);
+
+    // protected:
+    //     std::vector<Position> availablePositions(Position pos) override;
 };
 
 #endif

@@ -5,11 +5,12 @@
 namespace screen {
 
     struct stext_settings {
-        short foreColor;
-        short backColor;
-        bool italics;
-        bool underline;
-        bool bold;
+        short foreColor = 0;
+        short backColor = 0;
+        bool italics = false;
+        bool underline = false;
+        bool bold = false;
+        bool blink = false;
     } typedef TextSettings;
 
     void clearConsole(int x, int y);

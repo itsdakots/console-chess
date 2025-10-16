@@ -20,23 +20,27 @@ namespace screen {
 
     std::string formatText(std::string s, TextSettings settings) {
         std::string result = "\033[";
-        if (settings.bold != NULL) {
+        if (settings.bold) {
             result += "1;";
         }
 
-        if (settings.italics != NULL) {
+        if (settings.italics) {
             result += "3;";
         }
 
-        if (settings.underline != NULL) {
+        if (settings.underline) {
             result += "4;";
         }
 
-        if (settings.foreColor != NULL) {
+        if (settings.blink) {
+            result += "5;";
+        }
+
+        if (settings.foreColor != 0) {
             result += std::to_string(settings.foreColor) + ";";
         }
 
-        if (settings.backColor != NULL) {
+        if (settings.backColor != 0) {
             result += std::to_string(settings.backColor) + ";";
         }
 

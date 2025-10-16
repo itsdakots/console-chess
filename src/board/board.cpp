@@ -1,5 +1,5 @@
 #include "board.hpp"
-#include "../util/screen/screen.hpp"
+#include "../screen/screen.hpp"
 #include "../util/constants.hpp"
 #include <iostream>
 
@@ -45,8 +45,31 @@ void Board::print() {
 
 void Board::rerender() {
     screen::clearConsole(17, 0);
-    // Todo - Test Later and move to a separate namespace for these functions
     print();
+}
+
+bool Board::isPosOccupied(Position pos) {
+    auto piece = board[pos.y][pos.x];
+    if (piece.type == Empty)
+        return true;
+    return false;
+}
+
+bool Board::movePiece(Position start, Position end) {
+    if (start.x >= BOARD_SIZE || start.x < 0 || 
+        start.y >= BOARD_SIZE || start.y < 0 ||
+        end.x >= BOARD_SIZE || end.x < 0 ||
+        end.y >= BOARD_SIZE || end.y < 0)
+        return false;
+
+    auto piece = board[start.y][start.x];
+    if (piece.type == Empty) // Todo: Consider an error handling engine
+        return false;
+
+    board[end.y][end.x] = piece;
+    board[start.y][start.x] = Piece();
+
+    return true;
 }
 
 void Board::freeBoard() {
